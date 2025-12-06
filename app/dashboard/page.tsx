@@ -1,27 +1,16 @@
-import { redirect } from "next/navigation"
 import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Captions } from "lucide-react"
 import Link from "next/link"
 import { EventsList } from "@/components/events-list"
-import { SignOutButton } from "@/components/sign-out-button"
 
 export default async function DashboardPage() {
   const supabase = await getSupabaseServerClient()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/auth/signin")
-  }
-
   const { data: events } = await supabase
     .from("events")
     .select("*")
-    .eq("creator_id", user.id)
     .order("created_at", { ascending: false })
 
   return (
@@ -33,10 +22,12 @@ export default async function DashboardPage() {
             <Captions className="h-6 w-6 text-primary" />
             <span className="font-bold text-xl">LiveCaptions</span>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground hidden sm:inline">{user.email}</span>
-            <SignOutButton />
-          </div>
+          <Button variant="outline" asChild>
+            <Link href="/dashboard/create">
+              <Plus className="h-4 w-4 mr-2" />
+              New event
+            </Link>
+          </Button>
         </div>
       </header>
 

@@ -1,4 +1,4 @@
-import { redirect, notFound } from "next/navigation"
+import { notFound } from "next/navigation"
 import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { BroadcasterInterface } from "@/components/broadcaster-interface"
 import { Button } from "@/components/ui/button"
@@ -15,24 +15,11 @@ export default async function BroadcastPage({ params }: BroadcastPageProps) {
   const { uid } = await params
   const supabase = await getSupabaseServerClient()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/auth/signin")
-  }
-
   // Fetch the event
   const { data: event, error } = await supabase.from("events").select("*").eq("uid", uid).single()
 
   if (error || !event) {
     notFound()
-  }
-
-  // Check if the user is the creator
-  if (event.creator_id !== user.id) {
-    redirect("/dashboard")
   }
 
   const viewerUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/view/${uid}`

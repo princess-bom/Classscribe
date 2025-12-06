@@ -173,7 +173,13 @@ export function BroadcasterInterface({
         if (insertError) {
           console.error("Error saving caption:", insertError);
         } else if (insertedCaption) {
-          setCaptions((prev) => [...prev, insertedCaption]);
+          setCaptions((prev) => {
+            const exists = prev.some((caption) => caption.id === insertedCaption.id);
+            if (exists) {
+              return prev;
+            }
+            return [...prev, insertedCaption];
+          });
         }
       } catch (err) {
         console.error("Error saving caption:", err);

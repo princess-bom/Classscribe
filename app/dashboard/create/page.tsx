@@ -1,21 +1,9 @@
-import { redirect } from "next/navigation"
-import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { CreateEventForm } from "@/components/create-event-form"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Captions } from "lucide-react"
 import Link from "next/link"
 
-export default async function CreateEventPage() {
-  const supabase = await getSupabaseServerClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/auth/signin")
-  }
-
+export default function CreateEventPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Header */}
@@ -41,7 +29,7 @@ export default async function CreateEventPage() {
             <h1 className="text-3xl font-bold">Create New Event</h1>
             <p className="text-muted-foreground mt-1">Set up a new live caption event for your audience</p>
           </div>
-          <CreateEventForm userId={user.id} />
+          <CreateEventForm />
         </div>
       </main>
     </div>

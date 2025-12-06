@@ -12,11 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import { nanoid } from "nanoid"
 
-interface CreateEventFormProps {
-  userId: string
-}
-
-export function CreateEventForm({ userId }: CreateEventFormProps) {
+export function CreateEventForm() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [loading, setLoading] = useState(false)
@@ -38,7 +34,6 @@ export function CreateEventForm({ userId }: CreateEventFormProps) {
         uid,
         title,
         description,
-        creator_id: userId,
       })
       .select()
       .single()

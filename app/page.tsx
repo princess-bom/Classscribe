@@ -24,11 +24,8 @@ export default function HomePage() {
                 <Github className="h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/auth/signin">Sign in</Link>
-            </Button>
             <Button asChild>
-              <Link href="/auth/signup">Get started</Link>
+              <Link href="/dashboard">Open dashboard</Link>
             </Button>
           </div>
         </div>
@@ -46,10 +43,10 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Button size="lg" asChild>
-              <Link href="/auth/signup">Start broadcasting</Link>
+              <Link href="/dashboard/create">Create event</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/auth/signin">Sign in</Link>
+              <Link href="/dashboard">View events</Link>
             </Button>
           </div>
         </div>

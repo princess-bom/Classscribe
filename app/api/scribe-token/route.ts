@@ -3,27 +3,17 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
     try {
-        // Verify user is authenticated
-        const supabase = await getSupabaseServerClient();
-        const { data: { user }, error: authError } = await supabase.auth
-            .getUser();
-
-        if (authError || !user) {
-            return NextResponse.json(
-                { error: "Unauthorized" },
-                { status: 401 },
-            );
-        }
-
         // Get the event UID from query params
         const searchParams = request.nextUrl.searchParams;
         const eventUid = searchParams.get("eventUid");
+
+        const supabase = await getSupabaseServerClient();
 
         if (eventUid) {
             // Verify the user owns this event
             const { data: event, error: eventError } = await supabase
                 .from("events")
-                .select("creator_id")
+                .select("id")
                 .eq("uid", eventUid)
                 .single();
 
@@ -31,13 +21,6 @@ export async function GET(request: NextRequest) {
                 return NextResponse.json(
                     { error: "Event not found" },
                     { status: 404 },
-                );
-            }
-
-            if (event.creator_id !== user.id) {
-                return NextResponse.json(
-                    { error: "Unauthorized - not event owner" },
-                    { status: 403 },
                 );
             }
         }

@@ -10,7 +10,6 @@ Real-time captioning platform with on-device translation. Built with ElevenLabs 
 - Live caption broadcasting to unlimited viewers
 - On-device translation with [Chrome built-in AI](https://developer.chrome.com/docs/ai/translator-api) (Chrome 138+)
 - Automatic language detection
-- GitHub OAuth authentication
 - Caption history and event management
 
 ## Prerequisites
@@ -19,7 +18,7 @@ Real-time captioning platform with on-device translation. Built with ElevenLabs 
 - pnpm
 - Supabase account
 - ElevenLabs API key
-- GitHub account (for OAuth)
+- (Optional) GitHub account if you want to inspect the original repo
 
 ## Quick Setup
 
@@ -37,13 +36,7 @@ pnpm install
 - Run migrations from `supabase/migrations/` in order
 - Or use CLI: `supabase start` (for local dev)
 
-3. **Configure GitHub OAuth**
-
-- Create OAuth App at [github.com/settings/developers](https://github.com/settings/developers)
-- Callback URL: `http://localhost:3000/auth/callback`
-- Add credentials to Supabase Dashboard → Authentication → Providers
-
-4. **Environment variables**
+3. **Environment variables**
 
 Create `.env.local`:
 
@@ -54,7 +47,9 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ELEVENLABS_API_KEY=your_api_key
 ```
 
-5. **Run**
+Authentication has been removed for single-user setups, so anyone with access to your deployment can open the dashboard. Keep the app private (local network, protected Vercel project, etc.) if you don't want others creating broadcasts.
+
+4. **Run**
 
 ```bash
 pnpm dev
@@ -86,7 +81,6 @@ Deploy to Vercel:
 ## Documentation
 
 - [SCRIBE_SETUP.md](./SCRIBE_SETUP.md) - ElevenLabs configuration
-- [GITHUB_AUTH_SETUP.md](./GITHUB_AUTH_SETUP.md) - OAuth setup
 - [TRANSLATION_FEATURE.md](./TRANSLATION_FEATURE.md) - Translation details
 
 ## Troubleshooting
